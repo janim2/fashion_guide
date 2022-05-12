@@ -1,7 +1,7 @@
 
 
 <?php
-    session_start();
+    //session_start();
     require_once 'partials/header.php';
     require_once 'database/config.php';
     include_once 'helpers/counter_functions.php';
@@ -10,8 +10,6 @@
 
     
 ?>
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->
             <div class="main-content">
                 <div class="page-content">
                     <!-- start page title -->
@@ -28,7 +26,7 @@
                                  </div>
                              </div>
                              <div class="col-sm-6">
-                                <div class="float-end d-none d-sm-block">
+                                <div class="float-end d-sm-block">
                                     <a href="client-add.php" class="btn btn-success">Add Client</a>
                                 </div>
                              </div>
@@ -91,7 +89,7 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-body">
-                                           <h4 class="header-title">Clients <span class="btn btn-sm btn-primary"><?= count_total_clients($connect, $customer_id) ?></span> </h4> 
+                                           <h4 class="header-title">All Clients</h4> 
                                             
                                                 <hr class="mb-3">
 
@@ -107,12 +105,11 @@
                                                     $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
                                                     $i = 1;
                                                     if ($count > 0 && !empty($rows)) { ?>
-                                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead>
                                                 <tr>
                                                     <th>S/N</th>
-                                                    <th>Full Name</th>
-                                                    <th>Gender</th>
+                                                    <th>Clients</th>
                                                     <th>Phone Number</th>
                                                     <th>Residential Address</th>
                                                     <th>Added</th>
@@ -123,9 +120,23 @@
                                                     <?php foreach ($rows as $result) { ?>
                                                 <tr>
                                                     <td class="text-center"><?= $i ?></td>
-                                                    <td><?= ucwords($result['full_name']) ?></td>
-                                                    <td><?= ucwords($result['gender']) ?></td>
-                                                  <!--  <td><?= ucwords($result['phone_number_1']) ?></td>  -->
+                                                    <td>
+                                                        <a href="client-profile.php?ref=<?= $result['client_id']?>">
+                                                            <div class="media">
+                                                                <div class="me-3 align-self-center">
+                                                                    <div class="avatar-sm rounded bg-primary align-self-center">
+                                                                        <span class="avatar-title">
+                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="50">
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media-body overflow-hidden mt-1">
+                                                                    <h5 class="font-size-15 mb-1"><?= ucwords($result['full_name']) ?></h5>
+                                                                    <p class="mb-0 text-primary"><?= ucwords($result['gender']) ?></p>
+                                                                </div>                                                            
+                                                            </div>
+                                                        </a>
+                                                    </td>
                                                     <td><div class="media-body overflow-hidden mt-1">
                                                             <h5 class="font-size-14 mb-1"><?= ucwords($result['phone_number_1']) ?></h5>
                                                             <p class="text-primary mb-0"><?= ucwords($result['phone_number_2']) ?></p>
@@ -147,18 +158,9 @@
                                             <?php } ?>
                                         </div>
                                     </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-
-                            
-
+                                </div> 
+                            </div>
                         </div>
-        
-                        
-                    </div> <!-- container-fluid -->
+                    </div>
                 </div>
-                <!-- End Page-content -->
-
-              
-                
                 <?php include_once 'partials/footer.php'; ?>

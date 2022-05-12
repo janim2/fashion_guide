@@ -35,6 +35,9 @@
                                                         </select>   
                                                 </div>
                                             </div>
+
+                                            <div class="row mb-3 projects">
+                                            </div>
                                             
                                              <div class="row mb-3">
                                                 <label for="example-email-input" class="col-sm-4 col-form-label">Amount Charged- GHS</label>
@@ -54,7 +57,7 @@
                                             <div class="row mb-3">
                                                 <label for="example-url-input" class="col-sm-4 col-form-label">Paying Amount - GHS</label>
                                                 <div class="col-sm-6">
-                                                    <input class="form-control" type="text" placeholder=""  id="paying_amount" name="paying_amount" />
+                                                    <input class="form-control" type="text" placeholder=""  id="paying_amount" name="paying_amount" onkeyup="return calculateBalance()"/>
                                                 </div>
                                             </div>
 
@@ -82,27 +85,27 @@
                                                 <div class="col-sm-6">
                                                     <select class="form-select" aria-label="Default select example" id="received_by" name="received_by">
                                                          <?php
-                        $query = "SELECT * FROM users WHERE id = :customer_id";
-                        $statement = $connect->prepare($query);
-                        $statement->execute(
-                            array(
-                                ':customer_id' => $_SESSION['customer_id']
-                            )
-                        );
-                        $count = $statement->rowCount();
-                        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
-                        if ($count > 0 && !empty($rows)) {
-                            foreach ($rows as $result){?>
-                            
-            <option value="<?=$result['id'] ?>"><?=$result['full_name'] ?></option>
-                            <?php 
-                        }
-                            ?>
+                                                            $query = "SELECT * FROM users WHERE id = :customer_id";
+                                                            $statement = $connect->prepare($query);
+                                                            $statement->execute(
+                                                                array(
+                                                                    ':customer_id' => $_SESSION['customer_id']
+                                                                )
+                                                            );
+                                                            $count = $statement->rowCount();
+                                                            $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+                                                            if ($count > 0 && !empty($rows)) {
+                                                                foreach ($rows as $result){?>
+                                                                
+                                                <option value="<?=$result['id'] ?>"><?=$result['full_name'] ?></option>
+                                                                <?php 
+                                                            }
+                                                                ?>
 
-                            
-                     <?php
-                        }?> 
-                                                        
+                                                                
+                                                        <?php
+                                                            }?> 
+                                                                                            
                                                         </select>
                                                 </div>
                                             </div>

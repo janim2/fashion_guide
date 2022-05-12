@@ -50,6 +50,18 @@
         return $count; 
    }
 
+   function all_count_total_projects($connect, $_customerId){
+        $query = "SELECT * FROM projects WHERE customer_id = :id";
+        $statement = $connect->prepare($query);
+        $statement->execute(
+             array(
+                  ":id" => $_customerId
+             )
+        );
+        $count = $statement->rowCount();
+        return $count; 
+   }
+
    function total_project_costs($connect, $_customerId){
           $query = "SELECT SUM(project_cost) as total FROM projects WHERE status <> 2 AND customer_id = :id";
           $statement = $connect->prepare($query);

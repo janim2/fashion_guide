@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    //session_start();
     require_once 'database/config.php';
     require_once 'partials/header.php';
     require_once 'helpers/functions.php';
@@ -42,29 +42,82 @@
               </ol>
             </div>
           </div>
-          <!-- <div class="col-sm-6">
-            <div class="float-end d-none d-sm-block">
-              <a href="" class="btn btn-success">Add Widget</a>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
-    <!-- end page title -->
 
 
     <div class="container-fluid">
 
       <div class="page-content-wrapper">
+
+                              <div class="row">
+                                <div class="col-xl-3">
+                                   <div class="card">
+                                       <div class="card-body">
+                                            <i class="fas fa-briefcase text-info h1"></i>
+
+                                            <h3 class="mt-3 font-size-22">GHS <?= $result['project_cost'] == "" ? 0 : $result['project_cost']; ?></h3>
+
+                                            <div class="mt-3">
+                                                <p class="mb-0 mt-4">Project Cost</p>
+                                            </div>
+                                       </div>
+                                   </div>
+                                </div>
+
+                                <div class="col-xl-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                             <i class="fas fa-users text-danger h1"></i>
+ 
+                                             <h3 class="mt-3 font-size-22">GHS <?= ucwords($result['advance_payment']); ?></h3>
+ 
+                                             <div class="mt-3">
+                                                 <p class="mb-0 mt-4">Amount Paid</p>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                             <i class="fab fa-cc-visa text-success h1"></i>
+ 
+                                             <h3 class="mt-3 font-size-22">GHS <?= ucwords($result['balance']); ?></h3>
+ 
+                                             <div class="mt-3">
+ 
+                                                 <p class="mb-0 mt-4">Balance</p>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                             <i class="fas fa-shipping-fast text-primary h1"></i>
+ 
+                                             <h3 class="mt-3 font-size-24"> <?= $daystoend; ?> Days</h3>
+ 
+                                             <div class="mt-3">
+                                                 <p class="mb-0 mt-4">Days Left</p>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
       <p id="countdown"></p>
         <div class="card">
           <div class="card-body">
-            <h4 class="header-title mb-4">Client Name : <?= $client_name;?></h4>
-
+             <h4 class="header-title mb-4" style="color :blue"><?= $client_name;?></h4>
+                      <hr />
 
             <div class="col-md-12">
-              <div class="card mb-3">
-                <div class="card-body">
                 <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Status</h6>
@@ -72,15 +125,15 @@
                     <div class="col-sm-9 text-secondary">
                     <?php
                       if($result['status'] == 0){?>
-                          <span class="bg-danger text-white" style="padding: 10px">In progress</apan>
+                          <span class="badge badge-pill badge-soft-danger font-size-13">In progress</apan>
                       <?php
                       }
                       else if($result['status'] == 1){?>
-                          <span class="bg-warning text-white" style="padding: 10px">Completed Not Delivered</apan>
+                          <span class="badge badge-pill badge-soft-warning font-size-13">Completed Not Delivered</apan>
                       <?php
                       }
                       else{?>
-                          <span class="bg-success text-white" style="padding: 10px">Completed And Delivered</apan>
+                          <span class="badge badge-pill badge-soft-success font-size-13">Completed And Delivered</apan>
                       <?php
                       }
                   ?>
@@ -242,8 +295,7 @@
         </div>
       </div>
     </div>
-  </div> <!-- container-fluid -->
-</div>
+ 
 <!-- End Page-content -->
 <?php include_once 'partials/footer.php'; ?>
 <script>

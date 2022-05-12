@@ -1,6 +1,6 @@
 
 <?php
-    session_start();
+    //session_start();
     require_once 'partials/header.php';
     require_once 'database/config.php';
     include_once 'helpers/counter_functions.php';
@@ -114,18 +114,18 @@
                                             
                                                 <hr class="mb-3">
 
-                                             <?php
-                                                $query = "SELECT * FROM payments WHERE customer_id = :customer_id";
-                                                $statement = $connect->prepare($query);
-                                                $statement->execute(
-                                                    array(
-                                                        ':customer_id' => $customer_id
-                                                    )
-                                                );
-                                                $count = $statement->rowCount();
-                                                $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                                $i = 1;
-                                                if ($count > 0 && !empty($rows)) { ?>
+                                              <?php
+                                                    $query = "SELECT * FROM projects WHERE customer_id = :customer_id ORDER BY balance DESC";
+                                                    $statement = $connect->prepare($query);
+                                                    $statement->execute(
+                                                        array(
+                                                            ':customer_id' => $customer_id
+                                                        )
+                                                    );
+                                                    $count = $statement->rowCount();
+                                                    $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+                                                    $i = 1;
+                                                    if ($count > 0 && !empty($rows)) { ?>
                                             
                                             
                                             <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -133,24 +133,49 @@
                                                 <tr>
                                                     <th>S/N</th>
                                                     <th>Client</th>
+                                                    <th>Status</th>
                                                     <th>Type of Work</th>
-                                                    <th>Amount Charged</th>
+                                                    <th>Project Cost</th>
                                                     <th>Balance</th>
                                                     <th>Days left</th>
-                                                    <th>Dates</th>
                                                     <th>Delivery</th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
-                                                <?php foreach ($rows as $result) { ?>
+            
+            
+                                                <tbody>
+                                                    <?php foreach ($rows as $result) { ?>
                                                 <tr>
                                                     <td><?= $i ?></td>
-                                                    <td><?= ucwords(getClientName($connect, $result['client'])) ?></td>
-                                                    <td><?= ucwords(fetchProjectDetails($connect, fetchProjectIDFromClientID($connect, $result['client']), "type_of_work")) ?></td>
-                                                    <td><?= ucwords($result['amount_charged']) ?></td>
-                                                    <td><?= ucwords($result['balance']) ?></td>
-                                                    <td><?= ucwords($result['days_to_complete']) ?></td>
-                                                    <td><?= $result['payment_date'] ?></td>
-                                                    <td><?= ucwords(fetchProjectDetails($connect, fetchProjectIDFromClientID($connect, $result['client']), "mode_of_delivery")) ?></td>
+   
+
+                                                    <td><?= getClientName($connect, $result['client']) ?></td>
+                                                    <td>
+                                                        <?php
+                                                            if($result['status'] == 0){?>
+                                                                <span class="badge badge-pill badge-soft-danger font-size-13">In progress</apan>
+                                                            <?php
+                                                            }
+                                                            else if($result['status'] == 1){?>
+                                                                <span class="badge badge-pill badge-soft-warning font-size-13">Completed Not Delivered</apan>
+                                                            <?php
+                                                            }
+                                                            else{?>
+                                                                <span class="badge badge-pill badge-soft-success font-size-13">Completed And Delivered</apan>
+                                                            <?php
+                                                            }
+                                                        ?>
+                                                    </td>
+                                                    <td><?= ucwords($result['type_of_work']) ?></td>
+                                                    <td>GHS <?= $result['project_cost'] == "" ? 0 : ucwords($result['project_cost']) ?></td>
+                                                    <td>GHS <?= $result['balance'] == "" ? 0 : ucwords($result['balance']) ?></td>
+                                                    <td><?= $result['days_to_complete'] == "" ? 0 : $result['days_to_complete'] ?></td>
+                                                    
+                                                    <td><?= ucwords($result['mode_of_delivery']) ?></td>
+                                                    <td> 
+                                                        <a href="project-details.php?ref=<?= $result['project_id']?>" class="btn btn-sm btn-outline-primary">Details</a>
+                                                    </td>
                                                 </tr>
                                                  <?php $i++;
                                      } ?>

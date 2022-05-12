@@ -6,38 +6,50 @@
                                              <h4 class="header-title">Add Project  <?= $response; ?></h4>
                         <hr class="mb-3">
                                             <form method="POST" id="project_form" enctype="multipart/form-data" action="project-add.php">
-                                            <div class="row mb-3">
+                                            <?php
+                                                if(isset($_GET['forclientID'])){?>
+                                                <div class="row mb-3">
                                                 <label class="col-sm-4 col-form-label">Client</label>
                                                 <div class="col-sm-6">
                                                     <select class="form-select" aria-label="Default select example" name="client" id="client">
-                                                        <option selected></option>
-                                                         <?php
-                        $query = "SELECT * FROM clients WHERE customer_id = :customer_id";
-                        $statement = $connect->prepare($query);
-                        $statement->execute(
-                            array(
-                                ':customer_id' => $_SESSION['customer_id']
-                            )
-                        );
-                        $count = $statement->rowCount();
-                        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
-                        if ($count > 0 && !empty($rows)) {
-                            foreach ($rows as $result){?>
+                                                        <option selected value="<?= $_GET['forclientID']?>"><?= $_GET['forclientName']?></option>
+                                                    </select>
+                                                </div>
+                                                <?php
+                                                }
+                                                else{?>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-4 col-form-label">Client</label>
+                                                        <div class="col-sm-6">
+                                                            <select class="form-select" aria-label="Default select example" name="client" id="client">
+                                                                <option selected></option>
+                                                                <?php
+                                                                    $query = "SELECT * FROM clients WHERE customer_id = :customer_id";
+                                                                    $statement = $connect->prepare($query);
+                                                                    $statement->execute(
+                                                                        array(
+                                                                            ':customer_id' => $_SESSION['customer_id']
+                                                                        )
+                                                                    );
+                                                                    $count = $statement->rowCount();
+                                                                    $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+                                                                    if ($count > 0 && !empty($rows)) {
+                                                                        foreach ($rows as $result){?>
 
-                            
-            <option value="<?=$result['client_id'] ?>"><?=$result['full_name'] ?> -- <?=$result['phone_number_1'] ?> </option>
-                            <?php 
-                        }
-                            ?>
+                                                                        
+                                                        <option value="<?=$result['client_id'] ?>"><?=$result['full_name'] ?> -- <?=$result['phone_number_1'] ?> </option>
+                                                                        <?php 
+                                                                    }
+                                                                        ?>
 
-                            
-                     <?php
-                        }?> 
-                                                        
-                                                       
-                                                       
+                                                                        
+                                                                <?php
+                                                                    }?> 
                                                         </select>
                                                 </div>
+                                                <?php
+                                                }
+                                            ?>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="example-text-input" class="col-sm-4 col-form-label">Type of Work</label>

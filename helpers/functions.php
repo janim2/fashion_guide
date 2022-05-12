@@ -1,15 +1,13 @@
 <?php
 include('sms.php');
 
-function sendSms($phone_number, $message){
+function sendSms($phone, $msg)
+{
     $send = new SendSms();
     $send->key = '5zFWCDwTTpKT6xeSz1OjZp4BW';
-    $send->message = strip_tags(str_replace(array("\r", "\n"), ' ', str_replace(array("&"), ' n ', $message)));
-    $send->numbers = $phone_number;
-  
-    $sender_id = 'SageIT';
-  
-    $send->sender_id = $sender_id;
+    $send->message = $msg;
+    $send->numbers = $phone;
+    $send->sender = 'SageIT';
     return $send->sendMessage();
 }
 

@@ -16,7 +16,7 @@
                 <div class="user-info">
                     <h5 class="mt-3 font-size-16 text-white">
     </h5>
-                    <span class="font-size-13 text-white-50">Administrator</span>
+                    <span class="font-size-13 text-white-50"><?php echo $_SESSION['username'] ?></span>
                 </div>
             </div>
         </div>
@@ -51,7 +51,14 @@
                     <li>
                     <a href="payment.php" class=" waves-effect">
                         <i class="dripicons-wallet"></i>
-                        <span>Payment</span>
+                        <span>Payments</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="sms_records.php" class=" waves-effect">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>SMS</span>
                     </a>
                 </li>
 

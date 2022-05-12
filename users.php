@@ -1,6 +1,6 @@
 
 <?php
-    session_start();
+    //session_start();
     require_once 'partials/header.php';
     require_once 'database/config.php';
     include_once 'helpers/counter_functions.php';

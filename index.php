@@ -73,7 +73,7 @@
  </head>
 
 
- <body class="authentication-bg bg-primary">
+ <body class="authentication-bg" style="background:url(https://previews.123rf.com/images/olganiki/olganiki1505/olganiki150500013/39686603-marco-copyspace-con-herramientas-de-costura-y-accesorios-en-el-fondo-de-madera-blanca.jpg) no-repeat center center; background-size: cover;">
      <div class="home-center">
          <div class="home-desc-center">
 
@@ -87,13 +87,11 @@
 
 
                                      <div class="text-center">
-                                         <!-- <a href="index.html">
-                                             <img src="assets/images/logo-dark.png" height="22" alt="logo">
-                                         </a> -->
-                                         <h5 class="text-primary mb-2 mt-4">Fashion Guide</h5>
+                                         <a href="index.html">
+                                             <img src="assets/images/SAGEIT.png" height="100" alt="logo">
+                                         </a>
 
                                          <h5 class="text-primary mb-2 mt-4">Welcome Back !</h5>
-                                         <p class="text-muted">Sign in to continue Fashion Guide</p>
                                      </div>
 
                                      <?php  
@@ -115,15 +113,6 @@
                                                  placeholder="Enter password">
                                          </div>
 
-                                         <!--      <div class="mb-3">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input"
-                                                        id="customControlInline">
-                                                    <label class="form-label"
-                                                        for="customControlInline">Remember me</label>
-                                                </div>
-                                        </div>   -->
-
                                          <div>
                                              <button class="btn btn-primary w-100 waves-effect waves-light"
                                                  type="submit" id="login" name="login">Log In</button>
@@ -141,13 +130,11 @@
                              </div>
                          </div>
 
-                         <div class="mt-5 text-center text-white">
-                             <p>Don't have an account ?<a href="auth-register.html" class="fw-bold text-white">
-                                     Register</a> </p>
+                         <div class="mt-5 text-center text-primary">
                              <p>© <script>
                                      document.write(new Date().getFullYear())
-                                 </script> Fashion Guide by <a href="https://sageitservices.com" target="_blank"
-                                     class="fw-bold text-white"> SageIT Services</a></p>
+                                 </script> L'Aurel Vogue by <a href="https://sageitservices.com" target="_blank"
+                                     class="fw-bold text-primary"> SageIT Services</a></p>
                          </div>
                      </div>
                  </div>

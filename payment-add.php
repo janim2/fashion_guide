@@ -11,6 +11,7 @@
 
     if(isset($_POST['add_payment_btn'])){
         $client                        = $_POST["client"];
+        $project_id                    = $_POST["project_id"];
         $amount_charged                = $_POST["project_cost"];
         $balance                       = $_POST["balance"];
         $paying_amount                 = $_POST["paying_amount"];
@@ -19,8 +20,8 @@
         $received_by                   = $_POST["received_by"];
               
 
-         $query = "INSERT INTO payments(customer_id, client, amount_charged, balance, paying_amount, payment_date, days_to_complete, received_by)
-            VALUES(:cid, :client, :amount_charged, :balance, :paying_amount, :payment_date, :days_to_complete, :received_by)";
+         $query = "INSERT INTO payments(customer_id, client, project_id, amount_charged, balance, paying_amount, payment_date, days_to_complete, received_by)
+            VALUES(:cid, :client, :p_id, :amount_charged, :balance, :paying_amount, :payment_date, :days_to_complete, :received_by)";
         $statement = $connect->prepare($query);
 
         // looking for the presence of client same phone-number-1
@@ -36,11 +37,12 @@
             )
         ); 
         $counter = $count_statement->rowCount();
-        if($counter == 0){
+        // if($counter == 0){
             $has_added = $statement->execute(
                 array(
                    ":cid"                            => $customer_id,
                     ":client"                        => $client,
+                    ":p_id"                          => $project_id, 
                     ":amount_charged"                => $amount_charged ?? 0,    
                     ":balance"                       => $balance,    
                     ":paying_amount"                 => $paying_amount,
@@ -58,16 +60,19 @@
             );
 
             if($has_added){
+                $client_number = getClientNumber($connect, $client);
+                $client_name = getClientName($connect, $client);
+                sendSms($client_number, "Hi $client_name, an amount of GHS $paying_amount has been received. Your outstanding balance is GHS $balance. Helpline: 0274756446.");
                 $response = "<div class='alert alert-success text-center' role='alert'>Payment has been added successfully</div>";
                 
             }
             else{
                 $response = "<div class='alert alert-danger text-center' role='alert'>" + $has_added + "</div>";
             }
-        }
-        else{
-            $response = "<div class='alert alert-danger text-center' role='alert'>Payment already exists</div>";
-        }
+        // }
+        // else{
+        //     $response = "<div class='alert alert-danger text-center' role='alert'>Payment already exists</div>";
+        // }
         
     }
 
@@ -135,33 +140,49 @@
         }
 
       //fetch clients details
- $('#client').on('change', function() {
-    var client = $('#client').val();
-    if (client != "") {
-        $.ajax({
-            url: 'database/payment/fetch_payment_details.php',
+    $('#client').on('change', function() {
+        var client = $('#client').val();
+        if (client != "") {
+            fetchClientProjects(client);
+        } 
+    });
+
+
+function fetchClientProjects(client_id){
+    $.ajax({
+            url: 'database/payment/fetch_client_projects.php',
             type: 'POST',
-            dataType: 'json',
+            // dataType: 'json',
             data: {
-                "client_id": client,
+                "client_id": client_id,
             },
             success: function(data) {
-            //    alert("data");
-                $('#project_cost').val(data.project_cost == "" ? 0 : data.project_cost);
-                $('#advance_payment').val(data.advance_payment);
-                $('#balance').val(data.balance);
-                $('#days_to_complete').val(data.days_to_complete == "" ? 0 : data.days_to_complete);
+                //    alert("data");
+                $('.projects').html(data);
             }
         });
-    } else {
-       
-        $('#project_cost').val("");
-        $('#advance_payment').val("");
-        $('#balance').val("");
-        $('#days_to_complete').val("");
-        
-    }
+}
 
-});
+function calculateBalance(){
+    var cost = $('#project_cost').val() ?? 0; 
+    var advance = $('#advance_payment').val() ?? 0;
+    var pay = $('#paying_amount').val() ?? 0;
+
+    var sum = parseInt(advance) + parseInt(pay);
+    var balance = parseInt(cost) - sum;
+    if(pay == ""){
+        $('#balance').val(0);
+    }
+    else if(balance < 0){
+        // var amount = $parseInt(cost) - $parseInt(advance);
+
+        $('#balance').val(0);
+        alert("Cannot pay more than Project Amount cost");
+    }
+    else {
+        $('#balance').val(balance);
+    }
+}
+
 
  </script>

@@ -1,12 +1,12 @@
 
 
 <?php
-    session_start();
+   // session_start();
     require_once 'partials/header.php';
     require_once 'database/config.php';
     require_once 'helpers/functions.php';
     
-    sendSms("0554368510", "hello");
+   // sendSms("0554368510", "hello");
     $customer_id = $_SESSION['customer_id'];
 
    //$title = "add client";
@@ -130,7 +130,10 @@
             );
 
             if($has_added){
-                sendSms($phone_number_1, "Welcome $full_name to Fashion Guide. We are happy with your interest to do business with us. Contact Helpline: 0274756446 for any inquiries.");
+               sendSms($phone_number_1, "Welcome $full_name to Fashion Guide. We are happy with your interest to do business with us.  Helpline: 0274756446.");
+
+                //sendSms($_POST['phone_number_1'], 'Welcome $full_name to Fashion Guide. We are happy with your interest to do business with us.  Helpline: 0274756446.');
+
                 $response = "<div class='alert alert-success text-center' role='alert'>Client has been added successfully</div>";
             }
             else{
