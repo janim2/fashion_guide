@@ -1,5 +1,4 @@
 <?php
-
 class SendSms
 {
     private $_endpoint;

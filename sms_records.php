@@ -5,6 +5,7 @@
     require_once 'partials/header.php';
     require_once 'database/config.php';
     include_once 'helpers/counter_functions.php';
+    include_once 'helpers/functions.php';
 
     $customer_id = $_SESSION['customer_id'];
 
@@ -96,7 +97,7 @@
                                                 <hr class="mb-3">
 
                                                 <?php
-                                                    $query = "SELECT * FROM clients WHERE customer_id = :customer_id";
+                                                    $query = "SELECT * FROM sms WHERE customer_id = :customer_id";
                                                     $statement = $connect->prepare($query);
                                                     $statement->execute(
                                                         array(
@@ -123,7 +124,7 @@
                                                 <tr>
                                                     <td class="text-center"><?= $i ?></td>
                                                     <td>
-                                                        <a href="client-profile.php?ref=<?= $result['client_id']?>">
+                                                        <a href="client-profile.php?ref=<?= getClientIDUsingPhoneNumber($connect, $result['phone_number'])?>">
                                                             <div class="media">
                                                                 <div class="me-3 align-self-center">
                                                                     <div class="avatar-sm rounded bg-primary align-self-center">
@@ -133,18 +134,21 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="media-body overflow-hidden mt-1">
-                                                                    <h5 class="font-size-15 mb-1"><?= ucwords($result['full_name']) ?></h5>
-                                                                    <p class="mb-0 text-primary"><?= ucwords($result['phone_number_1']) ?></p>
+                                                                    <h5 class="font-size-15 mb-1"><?= ucwords(getClientName($connect, getClientIDUsingPhoneNumber($connect, $result['phone_number']))) ?></h5>
+                                                                    <p class="mb-0 text-primary"><?= ucwords(getClientNumber($connect, getClientIDUsingPhoneNumber($connect, $result['phone_number']))) ?></p>
                                                                 </div>                                                            
                                                             </div>
                                                         </a>
                                                     </td>
                                                     <td>
+                                                        <?= $result['message']; ?>
                                                     </td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td> <?= $result['credit']; ?></td>
                                                     <td>
-                                                       
+                                                        <?= $result['date']; ?>
+                                                    </td>
+                                                    <td>
+                                                    Sent
                                                     </td>
                                                 </tr>
                                                  <?php $i++;

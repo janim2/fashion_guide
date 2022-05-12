@@ -65,14 +65,14 @@
         $statement = $connect->prepare($query);
 
         // looking for the presence of client same phone-number-1
-        $count_query = "SELECT * FROM clients WHERE customer_id = :customer_id AND full_name = :full_name AND phone_number_1 = :phone_number_1 AND phone_number_2 = :phone_number_2";
+        $count_query = "SELECT * FROM clients WHERE customer_id = :customer_id AND phone_number_1 = :phone_number_1";
         $count_statement = $connect->prepare($count_query);
         $count_statement->execute(
             array(
                 ":customer_id"      =>  $customer_id,
-                ":full_name"        =>  $full_name,
+                // ":full_name"        =>  $full_name,
                 ":phone_number_1"   =>  $phone_number_1,
-                ":phone_number_2"   =>  $phone_number_2,
+                // ":phone_number_2"   =>  $phone_number_2,
 
             )
         );
@@ -130,7 +130,7 @@
             );
 
             if($has_added){
-               sendSms($phone_number_1, "Welcome $full_name to Fashion Guide. We are happy with your interest to do business with us.  Helpline: 0274756446.");
+               sendSms($connect, $phone_number_1, "Welcome $full_name to Fashion Guide. We are happy with your interest to do business with us.  Helpline: 0274756446.");
 
                 //sendSms($_POST['phone_number_1'], 'Welcome $full_name to Fashion Guide. We are happy with your interest to do business with us.  Helpline: 0274756446.');
 

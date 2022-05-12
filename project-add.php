@@ -77,7 +77,7 @@
             if($has_added){
                 $client_number = getClientNumber($connect, $client);
                 $client_name = getClientName($connect, $client);
-                sendSms($client_number, "Hi $client_name, your $type_of_work work has been added to our list of ongoing projects and expected to start on $start_date. Sewing Cost is GHS $sewing_charges, Delivery Cost is GHS $delivery_charges. Total project cost is GHS $project_cost, Advance payment made is GHS $advance_payment, Balance GHS $balance. Your $type_of_work will be completed in $days_to_complete. Helpline: 0274756446.");
+                sendSms($connect, $client_number, "Hi $client_name, your $type_of_work work has been added to our list of ongoing projects and expected to start on $start_date. Sewing Cost is GHS $sewing_charges, Delivery Cost is GHS $delivery_charges. Total project cost is GHS $project_cost, Advance payment made is GHS $advance_payment, Balance GHS $balance. Your $type_of_work will be completed in $days_to_complete. Helpline: 0274756446.");
                 $response = "<div class='alert alert-success text-center' role='alert'>Project has been added successfully added</div>";
                 
             }

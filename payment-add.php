@@ -62,7 +62,7 @@
             if($has_added){
                 $client_number = getClientNumber($connect, $client);
                 $client_name = getClientName($connect, $client);
-                sendSms($client_number, "Hi $client_name, an amount of GHS $paying_amount has been received. Your outstanding balance is GHS $balance. Helpline: 0274756446.");
+                sendSms($connect, $client_number, "Hi $client_name, an amount of GHS $paying_amount has been received. Your outstanding balance is GHS $balance. Helpline: 0274756446.");
                 $response = "<div class='alert alert-success text-center' role='alert'>Payment has been added successfully</div>";
                 
             }
