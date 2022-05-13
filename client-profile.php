@@ -115,7 +115,7 @@
                         <p class="text-secondary mb-1"><?= $result['residential_address']?></p>
                         <p class="text-muted font-size-sm"><?= $result['gender']?></p>
                         <button class="btn btn-primary" onclick="location.href='project-add.php?forclientID=<?= $client_id ?>&forclientName=<?= $result['full_name']?>'">Add Project</button>
-                        <button class="btn btn-outline-primary">Send Message</button>
+                        <button class="btn btn-outline-primary" onclick="location.href='sms-add.php?sendToID=<?= $client_id; ?>'">Send Message</button>
                       </div>
                     </div>
                   </div>

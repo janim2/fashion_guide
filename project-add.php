@@ -1,4 +1,6 @@
  <?php 
+    ini_set('display_errors', '0');
+
     session_start();
     require_once 'partials/header.php';
     require_once 'database/config.php';
@@ -26,10 +28,11 @@
         $delivery_location             = $_POST["delivery_location"];
         $added_by                      = $_POST["added_by"];
 
+        $temp_img_upload_id            = random_int(10, 999999);
 
 
-         $query = "INSERT INTO projects(customer_id, client, type_of_work, description, type_of_fabric, sewing_charges, delivery_charges, project_cost, advance_payment, balance, start_date, end_date, days_to_complete, mode_of_delivery, delivery_location, added_by)
-            VALUES(:customer_id, :client, :type_of_work, :description, :type_of_fabric, :sewing_charges, :delivery_charges, :project_cost,  :advance_payment, :balance, :start_date, :end_date, :days_to_complete, :mode_of_delivery, :delivery_location, :added_by)";
+         $query = "INSERT INTO projects(customer_id, client, type_of_work, description, type_of_fabric, sewing_charges, delivery_charges, project_cost, advance_payment, balance, start_date, end_date, days_to_complete, mode_of_delivery, delivery_location, temp_img_upload_id, added_by)
+            VALUES(:customer_id, :client, :type_of_work, :description, :type_of_fabric, :sewing_charges, :delivery_charges, :project_cost,  :advance_payment, :balance, :start_date, :end_date, :days_to_complete, :mode_of_delivery, :delivery_location, :tmp_img_upload_id, :added_by)";
         $statement = $connect->prepare($query);
 
         // looking for the presence of client same phone-number-1
@@ -63,18 +66,17 @@
                     ":days_to_complete"              => $days_to_complete,    
                     ":mode_of_delivery"              => $mode_of_delivery,    
                     ":delivery_location"             => $delivery_location,
+                    ":tmp_img_upload_id"             => $temp_img_upload_id,
                     ":added_by"                      => $added_by,
-                    //":added_by"                         => $
-                    //":created_on"                       => $
-                    //":updated_on"                       => $
-                    
-                    // ":created_by"                     =>  $_SESSION['username'],
-                    // ":the_date"                       =>  date('Y-m-d H:i:s'), 
                      
                 )
             );
 
             if($has_added){
+                //upload images if any
+                if($_FILES["files"]){
+                    upload_images($connect, fetchProjectIdUsingTempImgUploadID($connect, $temp_img_upload_id));
+                }
                 $client_number = getClientNumber($connect, $client);
                 $client_name = getClientName($connect, $client);
                 sendSms($connect, $client_number, "Hi $client_name, your $type_of_work work has been added to our list of ongoing projects and expected to start on $start_date. Sewing Cost is GHS $sewing_charges, Delivery Cost is GHS $delivery_charges. Total project cost is GHS $project_cost, Advance payment made is GHS $advance_payment, Balance GHS $balance. Your $type_of_work will be completed in $days_to_complete. Helpline: 0274756446.");
@@ -91,8 +93,64 @@
         
     }
 
+    function upload_images($connect, $post_id){
+        extract($_POST);
+        $error=array();
+
+        $txtGalleryName = "fabric";
+        $images_array = array();
+
+        $img_path = "assets/images/";
+
+        $extension=array("jpeg","jpg","png","gif");
+        foreach($_FILES["files"]["tmp_name"] as $key=>$tmp_name) {
+            $file_name=$_FILES["files"]["name"][$key];
+            $file_tmp=$_FILES["files"]["tmp_name"][$key];
+            $ext=pathinfo($file_name,PATHINFO_EXTENSION);
+
+            if(in_array($ext,$extension)) {
+                if(!file_exists($img_path.$txtGalleryName."/".$file_name)) {
+                    move_uploaded_file($file_tmp=$_FILES["files"]["tmp_name"][$key],$img_path.$txtGalleryName."/".$file_name);
+                    // echo $file_name;
+                    // array_push($images_array, $file_name);
+                    SaveToImagesDatabase($connect, $post_id, $file_name);
+                }
+                else {
+                    $filename=basename($file_name,$ext);
+                    $newFileName=$filename.time().".".$ext;
+                    move_uploaded_file($file_tmp=$_FILES["files"]["tmp_name"][$key],$img_path.$txtGalleryName."/".$newFileName);
+                    // echo $file_name;
+                    // array_push($images_array, $file_name);
+                    SaveToImagesDatabase($connect, $post_id, $file_name);
+                }
+            }
+            else {
+                array_push($error,"$file_name, ");
+            }
+        }
+    }
+
+    function SaveToImagesDatabase($connect, $id, $file_name){
+        $query = "INSERT INTO fabric_images(project_id, image_url) VALUES(:project_id, :image_url)";
+            $statement = $connect->prepare($query);
+            $result = $statement->execute(
+                array(
+                    ":project_id"   => $id,
+                    ":image_url"    => $file_name,
+                )
+            );
+
+            if($result){
+                // echo "success";
+            }
+            else{
+                echo "Something went wrong";
+            }
+    }
+
             
 ?>    
+
             <div class="main-content">
 
                 <div class="page-content">

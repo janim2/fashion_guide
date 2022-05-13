@@ -26,8 +26,9 @@ function sendSms($connect, $phone, $msg)
         saveSMS($connect, $phone, $msg, checkSMSCount($connect) - 1);
         return $send->sendMessage();
     }
-    else{
-        return "SMS credits exhausted";
+    else{?>
+        <script>alert("SMS credits exhausted");</script>
+    <?php
     }
 }
 
@@ -165,5 +166,18 @@ function getTotalAmountPaidForProject($connect, $project_id){
     return $result['total_amount_paid'];
 }
 
+
+function fetchProjectIdUsingTempImgUploadID($connect, $tmp_img_upload_id){
+    $query      = "SELECT project_id FROM projects WHERE temp_img_upload_id = :temp_img_upload_id";
+    $statement  = $connect->prepare($query);
+
+    $statement->execute(
+        array(
+            ":temp_img_upload_id" => $tmp_img_upload_id,
+        )
+    );
+    $result = $statement->fetch();
+    return $result['project_id'];
+}
 
 ?>

@@ -1,8 +1,10 @@
 <?php
+    ini_set('display_errors', '0');
     // session_start();
     require_once 'database/config.php';
     require_once 'partials/header.php';
     require_once 'helpers/functions.php';
+    require_once 'helpers/constants.php';
 
     $customer_id = $_SESSION['customer_id'];
     $project_id = $_GET['ref'];
@@ -48,75 +50,73 @@
 
 
     <div class="container-fluid">
-
       <div class="page-content-wrapper">
+          <div class="row">
+            <div class="col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-briefcase text-info h1"></i>
 
-                              <div class="row">
-                                <div class="col-xl-3">
-                                   <div class="card">
-                                       <div class="card-body">
-                                            <i class="fas fa-briefcase text-info h1"></i>
+                        <h3 class="mt-3 font-size-22">GHS <?= $result['project_cost'] == "" ? 0 : $result['project_cost']; ?></h3>
 
-                                            <h3 class="mt-3 font-size-22">GHS <?= $result['project_cost'] == "" ? 0 : $result['project_cost']; ?></h3>
+                        <div class="mt-3">
+                            <p class="mb-0 mt-4">Project Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                            <div class="mt-3">
-                                                <p class="mb-0 mt-4">Project Cost</p>
-                                            </div>
-                                       </div>
-                                   </div>
-                                </div>
+            <div class="col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                          <i class="fas fa-users text-danger h1"></i>
 
-                                <div class="col-xl-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                             <i class="fas fa-users text-danger h1"></i>
- 
-                                             <h3 class="mt-3 font-size-22">GHS <?= ucwords($result['advance_payment']); ?></h3>
- 
-                                             <div class="mt-3">
-                                                 <p class="mb-0 mt-4">Amount Paid</p>
-                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+                          <h3 class="mt-3 font-size-22">GHS <?= ucwords($result['advance_payment']); ?></h3>
 
-                                <div class="col-xl-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                             <i class="fab fa-cc-visa text-success h1"></i>
- 
-                                             <h3 class="mt-3 font-size-22">GHS <?= ucwords($result['balance']); ?></h3>
- 
-                                             <div class="mt-3">
- 
-                                                 <p class="mb-0 mt-4">Balance</p>
-                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+                          <div class="mt-3">
+                              <p class="mb-0 mt-4">Amount Paid</p>
+                          </div>
+                    </div>
+                </div>
+            </div>
 
-                                <div class="col-xl-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                             <i class="fas fa-shipping-fast text-primary h1"></i>
- 
-                                             <h3 class="mt-3 font-size-24"> <?= $daystoend; ?> Days</h3>
- 
-                                             <div class="mt-3">
-                                                 <p class="mb-0 mt-4">Days Left</p>
-                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                          <i class="fab fa-cc-visa text-success h1"></i>
+
+                          <h3 class="mt-3 font-size-22">GHS <?= ucwords($result['balance']); ?></h3>
+
+                          <div class="mt-3">
+
+                              <p class="mb-0 mt-4">Balance</p>
+                          </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                          <i class="fas fa-shipping-fast text-primary h1"></i>
+
+                          <h3 class="mt-3 font-size-24"> <?= $daystoend; ?> Days</h3>
+
+                          <div class="mt-3">
+                              <p class="mb-0 mt-4">Days Left</p>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
       <p id="countdown"></p>
-        <div class="card">
+        <div class="card col-md-12">
           <div class="card-body">
              <h4 class="header-title mb-4" style="color :blue"><?= $client_name;?></h4>
-                      <hr />
-
+              <hr />
+            
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-sm-3">
@@ -176,6 +176,44 @@
                     </div>
                   </div>
                   <hr>
+                  <div class="col-sm-3">
+                      <h6 class="mb-0">Images of Fabric</h6>
+                    </div>
+                  <div class="row">
+                    <?php
+                      $i_query = "SELECT * FROM fabric_images WHERE project_id = :id";
+                      $i_statement = $connect->prepare($i_query);
+                      $i_statement->execute(
+                        array(
+                          ":id" => $project_id
+                        )
+                      );
+                      $i_count = $i_statement->rowCount();
+                      $i_result = $i_statement->fetchAll(PDO::FETCH_ASSOC);
+
+                      if($i_count > 0 && !empty($i_result)){
+                        foreach($i_result as $i_row){?>
+                          <div class="col-xl-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img src="<?= $FABRIC_IMG_PATH.$i_row['image_url']?>" width="200" height="200" style="object-fit: cover"/>
+                                    <!-- <div class="mt-3">
+                                        <p class="mb-0 mt-4 text-center">Project Cost</p>
+                                    </div> -->
+                                </div>
+                            </div>
+                          </div>
+                        <?php
+                        }
+                      }else{?>
+                        <p class='mb-4'>No Fabric Images</p>
+                      <?php
+                      }
+                    ?>
+                  
+
+                  </div>
+                  </hr>
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Sewing Charges - GHS</h6>
@@ -295,6 +333,7 @@
         </div>
       </div>
     </div>
+    
  
 <!-- End Page-content -->
 <?php include_once 'partials/footer.php'; ?>

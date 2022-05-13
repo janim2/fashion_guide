@@ -30,7 +30,7 @@
                              </div>
                              <div class="col-sm-6">
                                 <div class="float-end d-sm-block">
-                                    <a href="client-add.php" class="btn btn-success">Send SMS</a>
+                                    <a href="sms-add.php" class="btn btn-success">Send SMS</a>
                                 </div>
                              </div>
                          </div>
@@ -97,7 +97,7 @@
                                                 <hr class="mb-3">
 
                                                 <?php
-                                                    $query = "SELECT * FROM sms WHERE customer_id = :customer_id";
+                                                    $query = "SELECT * FROM sms WHERE customer_id = :customer_id ORDER BY id DESC";
                                                     $statement = $connect->prepare($query);
                                                     $statement->execute(
                                                         array(

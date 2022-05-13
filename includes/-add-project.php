@@ -69,6 +69,12 @@
                                                     <input class="form-control" type="text" placeholder=""  id="type_of_fabric" name="type_of_fabric">
                                                 </div>
                                             </div>
+                                            <div class="row mb-3">
+                                                <label for="example-url-input" class="col-sm-4 col-form-label">Images of Fabric (if any)</label>
+                                                <div class="col-sm-6">
+                                                    <input type="file" name="files[]" class="form-control" id="customFile" multiple>
+                                                </div>
+                                            </div>
                                              <div class="row mb-3">
                                                 <label for="example-email-input" class="col-sm-4 col-form-label">Sewing Charges- GHS</label>
                                                 <div class="col-sm-6">
