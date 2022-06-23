@@ -195,7 +195,10 @@
                                      } ?>
                                                 </tbody>
                                             </table>
-                                            <?php } ?>
+                                            <?php }
+                                            else{
+                                                echo "No Projects Yet"; 
+                                            } ?>
                                         </div>
                                     </div>
                                 </div> <!-- end col -->

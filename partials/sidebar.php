@@ -78,7 +78,23 @@
                         <i class="dripicons-user"></i>
                         <span>Users</span>
                     </a>
-                </li>    
+                </li>
+
+                <li class="menu-title">Account</li>
+                
+                <li>
+                    <a href="account.php" class=" waves-effect">
+                        <i class="dripicons-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li> 
+
+                <li>
+                    <a href="subscription.php" class=" waves-effect">
+                        <i class="dripicons-user"></i>
+                        <span>Subscription</span>
+                    </a>
+                </li>        
             </ul>
         </div>
         <!-- Sidebar -->

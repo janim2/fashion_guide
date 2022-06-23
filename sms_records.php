@@ -11,11 +11,8 @@
 
     
 ?>
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->
             <div class="main-content">
                 <div class="page-content">
-                    <!-- start page title -->
                     <div class="page-title-box">
                         <div class="container-fluid">
                          <div class="row align-items-center">
@@ -30,13 +27,15 @@
                              </div>
                              <div class="col-sm-6">
                                 <div class="float-end d-sm-block">
+                                    <a href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Top Up SMS</a>
                                     <a href="sms-add.php" class="btn btn-success">Send SMS</a>
                                 </div>
                              </div>
                          </div>
                         </div>
                      </div>
-                     <!-- end page title -->    
+                     
+
                       <div class="container-fluid">
                         <div class="page-content-wrapper">
 
@@ -47,10 +46,10 @@
                                        <div class="card-body">
                                             <i class="fab fa-cc-visa text-info h1"></i>
 
-                                            <h3 class="mt-3 font-size-22"><?= count_total_clients($connect, $customer_id) ?></h3>
+                                            <h3 class="mt-3 font-size-22"></h3>
 
                                             <div class="mt-3">
-                                                <p class="mb-0">Total Clients</p>
+                                                <p class="mb-0">SMS Balance</p>
                                                 
                                             </div>
                                        </div>
@@ -62,10 +61,10 @@
                                         <div class="card-body">
                                              <i class="fab fa-cc-mastercard text-danger h1"></i>
  
-                                             <h3 class="mt-3 font-size-22"><?= countGender($connect, $customer_id, "male") ?></h3>
+                                             <h3 class="mt-3 font-size-22"></h3>
  
                                              <div class="mt-3">
-                                                <p class="mb-0">Males</p>
+                                                <p class="mb-0">Total Used</p>
                                              </div>
                                         </div>
                                     </div>
@@ -158,18 +157,35 @@
                                             <?php } ?>
                                         </div>
                                     </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
+                                </div>
+                            </div>
 
                             
 
                         </div>
         
                         
-                    </div> <!-- container-fluid -->
+                    </div>
                 </div>
-                <!-- End Page-content -->
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ...
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
               
                 
-                <?php include_once 'partials/footer.php'; ?>
+<?php include_once 'partials/footer.php'; ?>

@@ -1,64 +1,12 @@
- <?php  
- session_start();  
- require_once 'database/config.php';
-
- $message = "";  
- try  
- {  
-    //   $connect = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
-      if(isset($_POST["login"]))  
-      {  
-           if(empty($_POST["username"]) || empty($_POST["password"]))  
-           {  
-                $message = '<label>All fields are required</label>';  
-           }  
-           else  
-           {  
-                $query = "SELECT * FROM users WHERE username = :username AND password = :password";  
-                $statement = $connect->prepare($query);  
-                $statement->execute(  
-                     array(  
-                          ':username'       =>     $_POST["username"],  
-                          ':password'       =>     $_POST["password"]  
-                     )  
-                );  
-                
-                $count = $statement->rowCount();  
-                if($count > 0)  
-                {  
-                     $result = $statement->fetch();
-                     $_SESSION["username"] = $_POST["username"];
-                     $_SESSION["fullname"] = $_POST["full_name"];
-                     $_SESSION['customer_id'] = $result['id'];  
-                     header("location:dashboard.php");  
-                }  
-                else  
-                {  
-                     $message = '<label>Oops! Your credentials do not match our records</label>';  
-                }  
-           }  
-      }  
- }  
- catch(PDOException $error)  
- {  
-      $message = $error->getMessage();  
- }  
- ?>
-
-
-
-
  <!doctype html>
  <html lang="en">
 
  <head>
-
-
      <meta charset="utf-8" />
-     <title>Login page</title>
+     <title>Login|Fashion System </title>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-     <meta content="Themesdesign" name="author" />
+     <meta content="Fashion System" name="description" />
+     <meta content="Fashion System " name="SageIT Services" />
      <!-- App favicon -->
      <link rel="shortcut icon" href="assets/images/favicon.ico">
 
@@ -68,12 +16,11 @@
      <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
      <!-- App Css-->
      <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-
-
  </head>
 
 
- <body class="authentication-bg" style="background:url(https://previews.123rf.com/images/olganiki/olganiki1505/olganiki150500013/39686603-marco-copyspace-con-herramientas-de-costura-y-accesorios-en-el-fondo-de-madera-blanca.jpg) no-repeat center center; background-size: cover;">
+ <body class="authentication-bg"
+     style="background:url(https://previews.123rf.com/images/olganiki/olganiki1505/olganiki150500013/39686603-marco-copyspace-con-herramientas-de-costura-y-accesorios-en-el-fondo-de-madera-blanca.jpg) no-repeat center center; background-size: cover;">
      <div class="home-center">
          <div class="home-desc-center">
 
@@ -87,22 +34,16 @@
 
 
                                      <div class="text-center">
-                                         <a href="index.html">
+                                         <span>
                                              <img src="assets/images/SAGEIT.png" height="100" alt="logo">
-                                         </a>
+                                         </span>
 
                                          <h5 class="text-primary mb-2 mt-4">Welcome Back !</h5>
                                      </div>
 
-                                     <?php  
-                                        if(isset($message))  
-                                        {  
-                                            echo '<label class="text-danger">'.$message.'</label>';  
-                                        }  
-                                    ?>
-                                     <form method="post">
+                                     <form id="login_form">
                                          <div class="mb-3">
-                                             <label for="email">Username</label>
+                                             <label for="email">Username/Email</label>
                                              <input type="text" class="form-control" id="username" name="username"
                                                  placeholder="Enter username">
                                          </div>
@@ -114,15 +55,18 @@
                                          </div>
 
                                          <div>
-                                             <button class="btn btn-primary w-100 waves-effect waves-light"
+                                             <button class="btn btn-primary w-100 waves-effect waves-light loading"
                                                  type="submit" id="login" name="login">Log In</button>
                                          </div>
 
+                                         <div class="mt-4 text-center">
+                                             <a href="register.php" class=" mdi mdi-account me-1 text-primary"><b
+                                                     class=""> Create Account</b> </a>
+                                         </div>
+
                                          <!--    <div class="mt-4 text-center">
-                                            <a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock me-1"></i> Forgot your password?</a>
-                                        </div>  -->
-
-
+                                            <a href="register.php" class="text-muted"><i class="mdi mdi-lock me-1"></i> Forgot your password?</a>
+                                        </div> -->
                                      </form>
 
 
@@ -133,7 +77,7 @@
                          <div class="mt-5 text-center text-primary">
                              <p>© <script>
                                      document.write(new Date().getFullYear())
-                                 </script> L'Aurel Vogue by <a href="https://sageitservices.com" target="_blank"
+                                 </script> Fashion System<a href="https://sageitservices.com" target="_blank"
                                      class="fw-bold text-primary"> SageIT Services</a></p>
                          </div>
                      </div>
@@ -155,6 +99,15 @@
 
      <script src="assets/js/app.js"></script>
 
+     <?php require_once 'helpers/sweet_alert.php'; ?>
+     <script src="helpers/submittion_helper.js"></script>
+     <script>
+         $(document).on('submit', '#login_form', function (event) {
+             event.preventDefault();
+             return submitFormQuery(this, "database/auth/login.php", ".loading", "Login Successfully",
+                 "login");
+         });
+     </script>
  </body>
 
  </html>

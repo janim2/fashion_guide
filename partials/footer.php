@@ -26,11 +26,10 @@
             <div class="col-sm-6">
                 <script>
                     document.write(new Date().getFullYear())
-                </script> © Fashion.
+                </script> © Fashion System
             </div>
             <div class="col-sm-6">
-                <div class="text-sm-end d-none d-sm-block">
-                    Crafted with <i class="mdi mdi-heart text-danger"></i> by SageIT Services
+                <div class="text-sm-end d-none d-sm-block"> by SageIT Services
                 </div>
             </div>
         </div>
@@ -93,7 +92,11 @@
 <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
+<!-- Plugins js-->
+          <script src="assets/libs/jquery-countdown/jquery.countdown.min.js"></script>
 
+          <!-- Countdown js -->
+          <script src="assets/js/pages/coming-soon.init.js"></script>
 
 <!-- Required datatable js -->
 <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>

@@ -171,11 +171,14 @@
                                      } ?>
                                                 </tbody>
                                             </table>
-                                            <?php } ?>
+                                            <?php 
+                                                }else{
+                                                    echo "No projects yet";
+                                                } ?>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3">
+                                <!-- <div class="col-md-12 mb-3">
                                               <div class="card">
                                                <div class="card-body">
                                                   <h4 class="header-title mb-4" style="color :blue">Recent Activities</h4>
@@ -245,7 +248,7 @@
                                                     </div>
                                                </div>
                                            </div>
-              </div>
+              </div> -->
                             </div>
 
                             <div class="col-xl-3">

@@ -4,11 +4,11 @@ include('sms.php');
 
 function checkSMSCount($connect){
     session_start();
-    $query = "SELECT sms FROM users WHERE id = :id";
+    $query = "SELECT sms FROM company WHERE id = :id";
     $statement = $connect->prepare($query);
     $statement->execute(
         array(
-            ":id" => $_SESSION['customer_id'],
+            ":id" => $_SESSION['company_id'],
         )
     );
     $result = $statement->fetch();
@@ -178,6 +178,23 @@ function fetchProjectIdUsingTempImgUploadID($connect, $tmp_img_upload_id){
     );
     $result = $statement->fetch();
     return $result['project_id'];
+}
+
+function hashPassword($password){
+    return password_hash($password, PASSWORD_DEFAULT);
+}
+
+function fetchCompanyIDUsingName($con, $name){
+    $query      = "SELECT id FROM company WHERE name = :n";
+    $statement  = $con->prepare($query);
+
+    $statement->execute(
+        array(
+            ":n" => $name,
+        )
+    );
+    $result = $statement->fetch();
+    return $result['id'];
 }
 
 ?>

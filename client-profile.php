@@ -222,6 +222,8 @@
                                                                 </div>
                                                               <?php
                                                               }
+                                                            }else{
+                                                              echo "No Projects Yet";
                                                             }
                                                         ?>
                                                     </div>
