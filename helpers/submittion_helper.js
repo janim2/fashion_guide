@@ -58,17 +58,17 @@ function BtnLoading(elem) {
                             location.href = 'dashboard.php';
                         });
                 }
-                else if(page == 'register_sender_id'){
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: success_message,
-                        showConfirmButton: false,
-                        timer: 1500,
-                        }).then((result) => {
-                            location.href = 'register-sender-id.php';
-                        });
-                }
+                // else if(page == 'register_sender_id'){
+                //     Swal.fire({
+                //         position: 'top-end',
+                //         icon: 'success',
+                //         title: success_message,
+                //         showConfirmButton: false,
+                //         timer: 1500,
+                //         }).then((result) => {
+                //             location.href = 'register-sender-id.php';
+                //         });
+                // }
                  else{
                      Swal.fire({
                          position: 'top-end',

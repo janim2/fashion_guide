@@ -19,9 +19,13 @@
     );
 
     $result = $statement->fetch();
+    $client_id = $result['client'];
+    $project_name = $result['type_of_work'];
     $client_name = getClientName($connect, $result['client']);
-
+    $client_phone = getClientNumber($connect, $client_id);
     $daystoend = daysBetweenDates($result['end_date'],$result['start_date']);
+
+    $message = "Hi ".$client_name. ",the date to deliver your ".$result['type_of_work'] . " has been extended to ";
 ?>
 <!-- ============================================================== -->
 <!-- Start right Content here -->
@@ -128,11 +132,8 @@
                                 </div>
                              </div>
                          </div>
-                       
-                    
-
              </h4>
-              <hr />
+              <hr/>
             
             <div class="col-md-12">
                 <div class="row">
@@ -351,58 +352,65 @@
       </div>
     </div>
 
+
+    <!-- MODAL STARTS HERE -->
      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <form method="POST" id="inconSms_form">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Client</label>
+                    <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example"
+                            name="client_name" id="client_name" required>
+                            <option value="<?= $client_id;?>"><?= $client_name;?> - <?=$client_phone; ?></option>
+                        </select>
+                    </div> 
+                  </div>
+                  <input class="form-control" type="text" id="phone"
+                          name="phone" value="<?= $client_phone; ?>" hidden>
+                <div class="row mb-3">
+                  <label for="example-email-input" class="col-sm-4 col-form-label">Set Completion Date</label>
+                  <div class="col-sm-8">
+                      <input class="form-control" type="date" id="completion_date"
+                          name="completion_date" required>
+                  </div>
+              </div>
+
+                    
+                <div class="row mb-3">
+                    <label for="example-text-input" class="col-sm-4 col-form-label">
+                        Message
+                    </label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" rows="5" type="text" id="message" readonly
+                            name="message" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary loading">Send Message</button>
+            </div>
           </div>
-          <div class="modal-body">
-            <form method="POST" id="sms_form" enctype="multipart/form-data" action="sms-add.php">
-
-                                    <div class="row mb-3">
-                                        <label class="col-sm-4 col-form-label">Client</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-select" aria-label="Default select example"
-                                                name="" id="" required>
-                                               <option value=""><?= $client_name;?> - <?=$result['phone_number_1'] ?></option>
-                                                <option value=""></option>
-                                            </select>
-                                        </div> 
-                                      </div>
-
-                                    <div class="row mb-3">
-                                      <label for="example-email-input" class="col-sm-4 col-form-label">Set Completion Date</label>
-                                      <div class="col-sm-8">
-                                          <input class="form-control" type="date" placeholder="" id=""
-                                              name="" required>
-                                      </div>
-                                  </div>
-
-                                        
-
-
-                                    <div class="row mb-3">
-                                        <label for="example-text-input" class="col-sm-4 col-form-label">
-                                            Message
-                                        </label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" type="text" placeholder="" id="message"
-                                                name="message" required></textarea>
-                                        </div>
-                                    </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Send Message</button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
-
+    <!-- MODAL ENDS HERE -->
 
 <?php include_once 'partials/footer.php'; ?>
+
+<script>
+    $('#completion_date').on('change', function() {
+      var fullmessage = "<?= $message ?>" + this.value + ".Sorry for the inconvenience"; 
+      $('#message').html(fullmessage); 
+    });
+</script>
 <script>
   function markAs(status){
     $.ajax({
@@ -441,6 +449,31 @@
         });
       }
   }
+
+  $(document).on('submit', '#inconSms_form', function (event) {
+      event.preventDefault();
+      Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to send this inconvinience messsage?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, send it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        return submitFormQuery(this, "database/messages/send_inconvenience_msg.php", ".loading", "Message Successfully Sent",
+                 "other");
+        // Swal.fire(
+        //   'Deleted!',
+        //   'Your file has been deleted.',
+        //   'success'
+        // )
+      }
+    })
+      // return submitFormQuery(this, "database/auth/register.php", ".loading", "Registration Successfully",
+      //     "register");
+  });
   
 </script>
 <!-- <script>

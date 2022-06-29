@@ -3,7 +3,7 @@ include('sms.php');
 
 
 function checkSMSCount($connect){
-    session_start();
+    // session_start();
     $query = "SELECT sms FROM company WHERE id = :id";
     $statement = $connect->prepare($query);
     $statement->execute(
@@ -44,7 +44,7 @@ function saveSMS($connect, $phone, $msg, $sms_count){
         )
     );
     if($saved){
-        $u_query = "UPDATE users SET sms = :sms WHERE id = :id";
+        $u_query = "UPDATE company SET sms = :sms WHERE id = :id";
         $u_statement = $connect->prepare($u_query);
         $reduced = $u_statement->execute(
             array(

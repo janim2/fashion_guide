@@ -129,6 +129,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+
+<?php require_once 'helpers/sweet_alert.php'; ?>
+<script src="helpers/submittion_helper.js"></script>
+
 </body>
 
 </html>
