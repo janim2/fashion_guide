@@ -112,6 +112,21 @@
             
         }
         
+        function AccountValidity($con, $id){
+            $query = "SELECT validity FROM company WHERE id = :id";
+            $statement = $con->prepare($query);
+            $statement->execute(
+                array(
+                    ":id" => $id
+                )
+            );
+            $result = $statement->fetch();
+
+            if($result['validity'] == 0){
+                return 1;
+            }
+            return 0;
+        }
 
         function Login($con){
             $query = "SELECT * FROM users WHERE username = :u";
@@ -127,12 +142,18 @@
                // user is present
                $result = $statement->fetch();
                 if(password_verify($this->password, $result['password'])){
-                    //    session_start();
-                    $_SESSION['username']    = $result['username'];
-                    $_SESSION['fullname']    = $result['full_name'];
-                    $_SESSION['customer_id'] = $result['id'];
-                    $_SESSION['company_id']  = $result['company_id'];
-                    return 1;
+                    if($this->AccountValidity($con, $result['company_id']) == 0){
+                        //    session_start();
+                        $_SESSION['username']    = $result['username'];
+                        $_SESSION['fullname']    = $result['full_name'];
+                        $_SESSION['customer_id'] = $result['id'];
+                        $_SESSION['company_id']  = $result['company_id'];
+                        return 1;
+                    }
+                    else{
+                        return -1;
+                    }
+                   
                 }
                 else{
                     echo "Invalid password";

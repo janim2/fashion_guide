@@ -82,7 +82,11 @@ function BtnLoading(elem) {
                  }
                  // alert(data);
                  
-             } else {
+             } 
+             else if(data == -1){
+                location.href="subscription-page.php";
+             }
+             else {
                  // alert(data);
                  Swal.fire({
                    position: 'top-end',
