@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 29, 2022 at 02:24 PM
+-- Generation Time: Jul 06, 2022 at 03:00 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -85,7 +85,7 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`client_id`, `customer_id`, `full_name`, `phone_number_1`, `phone_number_2`, `residential_address`, `email`, `gender`, `male_trouser_waist`, `male_trouser_seat`, `male_trouser_thigh`, `male_trouser_knee`, `male_trouser_bass`, `male_trouser_lenght`, `male_shirt_chest`, `male_shirt_back`, `male_shirt_short_sleeve`, `male_shirt_long_sleeve`, `male_shirt_around_arm`, `male_shirt_cuff`, `male_shirt_lenght`, `male_agbada_back`, `male_agbada_length`, `female_skirt_waist`, `female_skirt_hip`, `female_skirt_knee`, `female_skirt_waist_hip`, `female_skirt_waist_knee`, `female_skirt_skirt_lenght`, `female_dress_bust`, `female_dress_under_bust`, `female_dress_waist`, `female_dress_shoulder`, `female_dress_shoulder_nipple`, `female_dress_shoulder_under_bust`, `female_dress_shoulder_waist`, `female_dress_nipple_nipple`, `female_dress_shoulder_hip`, `female_dress_shoulder_knee`, `female_dress_top_lenght`, `female_dress_lenght`, `female_trouser_waist`, `female_trouser_seat`, `female_trouser_thigh`, `female_trouser_knee`, `female_trouser_bass`, `female_trouser_lenght`, `added_by`, `created_on`, `updated_on`) VALUES
-(30, 17, 'Jesse Anim', '0268977129', '', 'Ghana', 'animjesse55@gmail.com', 'male', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, '2022-06-23 16:04:42', NULL);
+(31, 18, 'Jesse Anim', '0268977129', '', 'Ghana', 'iamjesse75@gmail.com', 'male', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, '2022-07-02 19:26:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -95,6 +95,7 @@ INSERT INTO `clients` (`client_id`, `customer_id`, `full_name`, `phone_number_1`
 
 CREATE TABLE `company` (
   `id` int(11) NOT NULL,
+  `validity` int(11) NOT NULL DEFAULT 0,
   `name` text NOT NULL,
   `location` varchar(255) NOT NULL,
   `logo` varchar(255) NOT NULL DEFAULT 'None',
@@ -107,8 +108,9 @@ CREATE TABLE `company` (
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`id`, `name`, `location`, `logo`, `helpline`, `sms`, `date`) VALUES
-(26, 'Fashion School Incorporated', 'Kumasi', '7.jpg', '1234567890', 10, '2022-06-29 12:24:22');
+INSERT INTO `company` (`id`, `validity`, `name`, `location`, `logo`, `helpline`, `sms`, `date`) VALUES
+(27, 2, 'Jesse Fashion Inc', 'Ghana', 'None', '1234567890', 2, '2022-07-06 12:59:45'),
+(28, 3, 'Freelance Company', 'Ghana', 'None', '1234567890', 0, '2022-07-05 13:16:19');
 
 -- --------------------------------------------------------
 
@@ -160,6 +162,13 @@ CREATE TABLE `fabric_images` (
   `image_url` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `fabric_images`
+--
+
+INSERT INTO `fabric_images` (`id`, `project_id`, `image_url`) VALUES
+(4, 32, '3.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -178,6 +187,14 @@ CREATE TABLE `payments` (
   `days_to_complete` varchar(255) NOT NULL,
   `received_by` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `customer_id`, `client`, `project_id`, `amount_charged`, `balance`, `paying_amount`, `payment_date`, `days_to_complete`, `received_by`) VALUES
+(13, 18, '31', 31, '300', 'NaN', '66', '2022-07-02', '27', '18'),
+(14, 18, '31', 31, '300', '232', '20', '2022-07-05', '27', '18');
 
 -- --------------------------------------------------------
 
@@ -212,7 +229,9 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`project_id`, `customer_id`, `client`, `status`, `type_of_work`, `description`, `type_of_fabric`, `sewing_charges`, `delivery_charges`, `project_cost`, `advance_payment`, `balance`, `start_date`, `end_date`, `days_to_complete`, `mode_of_delivery`, `delivery_location`, `temp_img_upload_id`, `added_by`) VALUES
-(30, 17, '30', 0, 'Slit and Kaba', '', 'Slit', '200', '10', '210', '0', '210', '2022-06-23', '2022-06-30', '7', 'Delivery', 'Kumasi', 618140, '17');
+(30, 17, '30', 0, 'Slit and Kaba', '', 'Slit', '200', '10', '210', '0', '210', '2022-06-23', '2022-06-30', '7', 'Delivery', 'Kumasi', 618140, '17'),
+(31, 18, '31', 0, 'Slit and Kaba', '', 'Silk', '300', '0', '300', '3', '297', '2022-07-05', '2022-07-29', '27', 'Delivery', 'Ghana', 947555, '18'),
+(32, 18, '31', 0, 'Shirt for dog', '', 'Cotton', '300', '20', '320', '', '', '2022-07-06', '2022-07-14', '14', 'Delivery', 'Kumasi, Ghana', 759881, '18');
 
 -- --------------------------------------------------------
 
@@ -245,7 +264,10 @@ INSERT INTO `sms` (`id`, `customer_id`, `phone_number`, `message`, `credit`, `da
 (18, 17, '0268977129', 'Hi Jesse Anim,the date to deliver your Slit and Kaba has been extended to 2022-06-22.Sorry for the inconvenience', 1, '2022-06-29 09:52:54'),
 (19, 17, '0268977129', 'Hi Jesse Anim,the date to deliver your Slit and Kaba has been extended to 2022-06-21.Sorry for the inconvenience', 1, '2022-06-29 09:54:07'),
 (20, 17, '0268977129', 'Hi Jesse Anim,the date to deliver your Slit and Kaba has been extended to 2022-06-30.Sorry for the inconvenience', 1, '2022-06-29 09:54:46'),
-(21, 17, '0268977129', 'Hi Jesse Anim,the date to deliver your Slit and Kaba has been extended to 2022-06-30.Sorry for the inconvenience', 1, '2022-06-29 09:57:31');
+(21, 17, '0268977129', 'Hi Jesse Anim,the date to deliver your Slit and Kaba has been extended to 2022-06-30.Sorry for the inconvenience', 1, '2022-06-29 09:57:31'),
+(22, 18, '0268977129', 'Hi Jesse Anim,the date to deliver your Slit and Kaba has been extended to 2022-07-14.Sorry for the inconvenience', 1, '2022-07-06 12:54:43'),
+(23, 18, '0268977129', 'Hi Jesse Anim,the date to deliver your Slit and Kaba has been extended to 2022-07-29.Sorry for the inconvenience', 1, '2022-07-06 12:55:09'),
+(24, 18, '0268977129', 'Hi Jesse Anim,the date to deliver your Slit and Kaba has been extended to 2022-07-29.Sorry for the inconvenience', 1, '2022-07-06 12:59:45');
 
 -- --------------------------------------------------------
 
@@ -270,7 +292,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `full_name`, `phone_number`, `username`, `password`, `role`, `created_on`, `updated_on`) VALUES
-(17, 26, 'Jesse Anim', '1234567890', 'iamjesse75@gmail.com', '$2y$10$SlxCyHIY98OjEig3RnH2qOfPNenJQN1RllfUjh4Ak403MXxVZoMp2', 'Administrator', '2022-06-23 15:42:16', '2022-06-23 15:42:16');
+(18, 27, 'Jesse Anim', '1234567890', 'iamjesse75@gmail.com', '$2y$10$nmxSuaBj8rCOZP62wTGzeeo5hygxHpmdccVkGGmC60emjQsR6nYwG', 'Administrator', '2022-06-29 12:49:16', '2022-06-29 12:49:16'),
+(19, 28, 'Jesse Anim', '1234567890', 'free@gmail.com', '$2y$10$1UegmVBq0lFsPUW3p.qdbOM9UF97gctm5JhTE5HQS8TlFLl7ZLW..', 'Administrator', '2022-07-05 13:12:34', '2022-07-05 13:12:34');
 
 --
 -- Indexes for dumped tables
@@ -338,13 +361,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `client_id` bigint(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `client_id` bigint(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `company_images`
@@ -362,31 +385,31 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `fabric_images`
 --
 ALTER TABLE `fabric_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` bigint(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `project_id` bigint(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `sms`
 --
 ALTER TABLE `sms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -21,7 +21,7 @@
                                                     <div class="row mb-3">
                                                         <label class="col-sm-4 col-form-label">Client</label>
                                                         <div class="col-sm-6">
-                                                            <select class="form-select" aria-label="Default select example" name="client" id="client">
+                                                            <select class="form-select" aria-label="Default select example" name="client" id="client" required>
                                                                 <option selected></option>
                                                                 <?php
                                                                     $query = "SELECT * FROM clients WHERE customer_id = :customer_id";
@@ -54,7 +54,7 @@
                                             <div class="row mb-3">
                                                 <label for="example-text-input" class="col-sm-4 col-form-label">Type of Work</label>
                                                 <div class="col-sm-6">
-                                                    <input class="form-control" type="text" placeholder=" " id="type_of_work" name="type_of_work">
+                                                    <input class="form-control" type="text" placeholder=" " id="type_of_work" name="type_of_work" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -70,15 +70,16 @@
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="example-url-input" class="col-sm-4 col-form-label">Images of Fabric (if any)</label>
+                                                <label for="example-url-input" class="col-sm-4 col-form-label">Images of Fabric &amp; Style (if any)</label>
                                                 <div class="col-sm-6">
                                                     <input type="file" name="files[]" class="form-control" id="customFile" multiple>
                                                 </div>
                                             </div>
+                                            
                                              <div class="row mb-3">
                                                 <label for="example-email-input" class="col-sm-4 col-form-label">Sewing Charges- GHS</label>
                                                 <div class="col-sm-6">
-                                                    <input class="form-control" type="text" placeholder="" id="sewing_charges" name="sewing_charges" value="" onkeyup="addSewingAndDeliveryCharges();" />
+                                                    <input class="form-control" type="text" placeholder="" id="sewing_charges" name="sewing_charges" value="" onkeyup="addSewingAndDeliveryCharges();" required/>
                                                 </div>
                                             </div>
 
@@ -111,7 +112,7 @@
                                              <div class="row mb-3">
                                                 <label for="example-date-input" class="col-sm-4 col-form-label">Start Date</label>
                                                 <div class="col-sm-6">
-                                                    <input class="form-control" type="date" id="start_date" name="start_date" value="<?= date('Y-m-d') ?>" />
+                                                    <input class="form-control" type="date" id="start_date" name="start_date" value="<?= date('Y-m-d') ?>" required/>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -142,7 +143,7 @@
                                                     <input class="form-control" type="text" placeholder=""  id="delivery_location" name="delivery_location" >
                                                 </div>
                                             </div>
-                                           <div class="row mb-3">
+                                           <div class="row mb-3" style="display:none;">
                                                 <label class="col-sm-4 col-form-label">Added By</label>
                                                 <div class="col-sm-6">
                                                     <select class="form-select" aria-label="Default select example" name="added_by" id="added_by">
@@ -162,9 +163,7 @@
                                                                 <option value="<?=$result['id'] ?>"><?=$result['full_name'] ?></option>
                                                                                 <?php 
                                                                             }
-                                                                                ?>
-
-                                                                                
+                                                                                ?>  
                                                                         <?php
                                                                             }?> 
                                                         </select>

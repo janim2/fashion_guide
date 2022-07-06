@@ -148,6 +148,8 @@
                         $_SESSION['fullname']    = $result['full_name'];
                         $_SESSION['customer_id'] = $result['id'];
                         $_SESSION['company_id']  = $result['company_id'];
+                        $_SESSION['start']       = time();
+                        $_SESSION['expire']      = $_SESSION['start'] + (30 * 60);
                         return 1;
                     }
                     else{

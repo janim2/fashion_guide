@@ -57,7 +57,7 @@
                 else{
                     $('#project_cost').val(data.project_cost == "" ? 0 : data.project_cost);
                     $('#advance_payment').val(data.advance_payment);
-                    // $('#balance').val(data.balance);
+                    $('#balance').val(data.amount_remaining);
                     $('#days_to_complete').val(data.days_to_complete == "" ? 0 : data.days_to_complete);
                 }
                     
@@ -66,7 +66,7 @@
         } else {
             $('#project_cost').val("");
             $('#advance_payment').val("");
-            $('#balance').val("");
+            $('#balance').val(data.amount_remaining);
             $('#days_to_complete').val("");
             
         }

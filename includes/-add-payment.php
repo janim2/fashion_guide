@@ -8,7 +8,7 @@
                                             <div class="row mb-3">
                                                 <label class="col-sm-4 col-form-label">Client</label>
                                                 <div class="col-sm-6">
-                                                    <select class="form-select" aria-label="Default select example" name="client" id="client">
+                                                    <select class="form-select" aria-label="Default select example" name="client" id="client" required>
                                                         <option></option>
                                                         <?php
                                                                 $query = "SELECT * FROM projects WHERE customer_id = :customer_id";
@@ -30,7 +30,11 @@
 
                                                                     
                                                             <?php
-                                                                }?> 
+                                                                }
+                                                                else{?>
+                                                                    <option value="" disabled="disabled" selected="selected">Add Project To Proceed</option>
+                                                                <?php
+                                                            }?> 
                                                        
                                                         </select>   
                                                 </div>
@@ -57,7 +61,7 @@
                                             <div class="row mb-3">
                                                 <label for="example-url-input" class="col-sm-4 col-form-label">Paying Amount - GHS</label>
                                                 <div class="col-sm-6">
-                                                    <input class="form-control" type="text" placeholder=""  id="paying_amount" name="paying_amount" onkeyup="return calculateBalance()"/>
+                                                    <input class="form-control" type="text" placeholder=""  id="paying_amount" name="paying_amount" onkeyup="return calculateBalance()" required/>
                                                 </div>
                                             </div>
 
@@ -71,7 +75,7 @@
                                              <div class="row mb-3">
                                                 <label for="example-date-input" class="col-sm-4 col-form-label">Payment Date</label>
                                                 <div class="col-sm-6">
-                                                    <input class="form-control" type="date" id="payment_date" name="payment_date" value="<?= date('Y-m-d') ?>">
+                                                    <input class="form-control" type="date" id="payment_date" name="payment_date" value="<?= date('Y-m-d') ?>" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -80,7 +84,7 @@
                                                     <input class="form-control" type="text" value="" id="days_to_complete" name="days_to_complete" readonly>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3" style="display:none;">
                                                 <label class="col-sm-4 col-form-label">Received By</label>
                                                 <div class="col-sm-6">
                                                     <select class="form-select" aria-label="Default select example" id="received_by" name="received_by">
@@ -101,8 +105,6 @@
                                                                 <?php 
                                                             }
                                                                 ?>
-
-                                                                
                                                         <?php
                                                             }?> 
                                                                                             

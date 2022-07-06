@@ -23,7 +23,7 @@
     $project_name = $result['type_of_work'];
     $client_name = getClientName($connect, $result['client']);
     $client_phone = getClientNumber($connect, $client_id);
-    $daystoend = daysBetweenDates($result['end_date'],$result['start_date']);
+    $daystoend = daysBetweenDates($result['end_date'],date('Y-m-d'));
 
     $message = "Hi ".$client_name. ",the date to deliver your ".$result['type_of_work'] . " has been extended to ";
 ?>
@@ -301,14 +301,32 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Days to Complete</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                    <?= $daystoend; ?>
-                    </div>
-                  </div>
+                  <?php
+                    if($daystoend > 0){?>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Days to Complete</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                        <?= $daystoend; ?>
+                        </div>
+                      </div>
+                    <?php
+                    }
+                    else{?>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <h6 class="mb-0">Days to Complete</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary" style="font-size: 20px">
+                          <?= $daystoend; ?>
+                          <a href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Send Inconvience Message</a>
+                          </div>
+                        </div>
+                    <?php
+                    }
+                  ?>
+
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
@@ -374,6 +392,8 @@
                   </div>
                   <input class="form-control" type="text" id="phone"
                           name="phone" value="<?= $client_phone; ?>" hidden>
+                  <input class="form-control" type="text" id="project_id"
+                          name="project_id" value="<?= $project_id; ?>" hidden>
                 <div class="row mb-3">
                   <label for="example-email-input" class="col-sm-4 col-form-label">Set Completion Date</label>
                   <div class="col-sm-8">

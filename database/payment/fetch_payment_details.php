@@ -34,10 +34,11 @@
     $userarray      = array();
 
 
-    $userarray["project_cost"]          =   strtoupper($details_check["project_cost"]);
-    $userarray["advance_payment"]          =   strtoupper($total_amount_paid_so_far["amount_paid"]);
-    $userarray["balance"]                 =   strtoupper($details_check["balance"]);
-    $userarray["days_to_complete"]        =   strtoupper($details_check["days_to_complete"]);
+    $userarray["project_cost"]           =   strtoupper($details_check["project_cost"]);
+    $userarray["advance_payment"]        =   strtoupper($total_amount_paid_so_far["amount_paid"]);
+    $userarray["balance"]                =   strtoupper($details_check["balance"]);
+    $userarray["amount_remaining"]       =   strval($details_check['project_cost'] - $total_amount_paid_so_far['amount_paid']);
+    $userarray["days_to_complete"]       =   strtoupper($details_check["days_to_complete"]);
     
 
     echo json_encode($userarray);

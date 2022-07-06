@@ -1,7 +1,30 @@
 <?php
     session_start();
-    if(!isset($_SESSION['customer_id']))
-        header('location: index.php');
+
+    $now = time();
+
+    if($now > $_SESSION['expire']){
+        session_start();
+        session_unset();     // unset $_SESSION variable for the run-time 
+        session_destroy(); 
+        header('location: index.php'); ?>
+
+        <!-- <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: "Session has expired",
+                showConfirmButton: false,
+                timer: 1500,
+                }).then((result) => {
+                    location.href = 'index.php';
+                });
+        </script> -->
+
+    <?php
+    }
+    // if(!isset($_SESSION['customer_id']))
+    //     header('location: index.php');
 ?>
 <!doctype html>
 <html lang="en">

@@ -143,7 +143,6 @@
                                                 </tr>
                                                 </thead>
             
-            
                                                 <tbody>
                                                     <?php foreach ($rows as $result) { ?>
                                                 <tr>
@@ -184,7 +183,27 @@
                                                     <td><?= ucwords($result['type_of_work']) ?></td>
                                                     <td>GHS <?= $result['project_cost'] == "" ? 0 : ucwords($result['project_cost']) ?></td>
                                                     <td>GHS <?= $result['balance'] == "" ? 0 : ucwords($result['balance']) ?></td>
-                                                    <td><?= $result['days_to_complete'] == "" ? 0 : $result['days_to_complete'] ?></td>
+                                                    <?php
+                                                        $days_to_complete = daysBetweenDates($result['end_date'], date('Y-m-d'));
+                                                        // echo $days_to_complete;
+                                                        if($days_to_complete > 0){?>
+                                                            <td>
+                                                                <?= 
+                                                                    $days_to_complete <= 0 ? 0 : $days_to_complete; 
+                                                                ?>
+                                                            </td>
+                                                        <?php
+                                                        }
+                                                        else{?>
+                                                            <td class="bg-danger">
+                                                                <?= 
+                                                                    $days_to_complete <= 0 ? 0 : $days_to_complete; 
+                                                                ?>
+                                                            </td>
+                                                        <?php
+                                                        }
+                                                    ?>
+                                                    
                                                     
                                                     <td><?= ucwords($result['mode_of_delivery']) ?></td>
                                                     <td> 

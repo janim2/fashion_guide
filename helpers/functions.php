@@ -1,7 +1,6 @@
 <?php
 include('sms.php');
 
-
 function checkSMSCount($connect){
     // session_start();
     $query = "SELECT sms FROM company WHERE id = :id";
@@ -49,7 +48,7 @@ function saveSMS($connect, $phone, $msg, $sms_count){
         $reduced = $u_statement->execute(
             array(
                 ":sms" => $sms_count,
-                ":id" => $_SESSION['customer_id'],
+                ":id" => $_SESSION['company_id'],
                 )
         );
         if($reduced){

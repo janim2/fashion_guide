@@ -150,17 +150,17 @@
 
 function fetchClientProjects(client_id){
     $.ajax({
-            url: 'database/payment/fetch_client_projects.php',
-            type: 'POST',
-            // dataType: 'json',
-            data: {
-                "client_id": client_id,
-            },
-            success: function(data) {
-                //    alert("data");
-                $('.projects').html(data);
-            }
-        });
+        url: 'database/payment/fetch_client_projects.php',
+        type: 'POST',
+        // dataType: 'json',
+        data: {
+            "client_id": client_id,
+        },
+        success: function(data) {
+            //    alert("data");
+            $('.projects').html(data);
+        }
+    });
 }
 
 function calculateBalance(){
@@ -171,12 +171,12 @@ function calculateBalance(){
     var sum = parseInt(advance) + parseInt(pay);
     var balance = parseInt(cost) - sum;
     if(pay == ""){
-        $('#balance').val(0);
+        $('#balance').val(balance);
     }
     else if(balance < 0){
         // var amount = $parseInt(cost) - $parseInt(advance);
 
-        $('#balance').val(0);
+        $('#balance').val(balance);
         alert("Cannot pay more than Project Amount cost");
     }
     else {
